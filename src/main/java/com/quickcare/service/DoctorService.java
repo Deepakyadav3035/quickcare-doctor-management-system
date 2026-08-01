@@ -3,6 +3,7 @@ package com.quickcare.service;
 import com.quickcare.entity.Doctor;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface DoctorService {
 
@@ -10,7 +11,7 @@ public interface DoctorService {
 
     List<Doctor> getAllDoctors();
 
-    Doctor getDoctorById(Long id);
+    Optional<Doctor> getDoctorById(Long id);
 
     Doctor updateDoctor(Long id, Doctor doctor);
 
