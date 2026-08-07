@@ -1,9 +1,11 @@
 package com.quickcare.service.impl;
 
 import com.quickcare.entity.Doctor;
+import com.quickcare.exception.ResourceNotFoundException;
 import com.quickcare.repository.DoctorRepository;
 import com.quickcare.service.DoctorService;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,7 +38,7 @@ public class DoctorServiceImpl implements DoctorService {
     public Optional<Doctor> getDoctorById(Long id) {
         Optional<Doctor> doctorById = doctorRepository.findDoctorById(id);
         if(!doctorById.isPresent()){
-            throw new RuntimeException("No Doctor found with this id !" +id);
+            throw new ResourceNotFoundException("Doctor not found with this id " +id);
         }
         return doctorById;
     }
@@ -45,7 +47,7 @@ public class DoctorServiceImpl implements DoctorService {
     public Doctor updateDoctor(Long id, Doctor doctor) {
         Optional<Doctor> existingDoctor = doctorRepository.findDoctorById(id);
         if(!existingDoctor.isPresent()){
-            throw new RuntimeException("No Doctor found with this id !" +id);
+            throw new ResourceNotFoundException("Doctor not found with this id " +id);
         }
         Doctor updatedDoctor = existingDoctor.get();
         updatedDoctor.setFullName(doctor.getFullName());
@@ -66,7 +68,7 @@ public class DoctorServiceImpl implements DoctorService {
     public void deletDoctor(Long id) {
         Optional<Doctor> doctorById = doctorRepository.findDoctorById(id);
         if(!doctorById.isPresent()){
-            throw new RuntimeException("No Doctor found with this id !"+ id);
+            throw new ResourceNotFoundException("Doctor not found with this id "+ id);
         }
         doctorRepository.deleteById(id);
 
